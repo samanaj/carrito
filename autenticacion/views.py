@@ -17,9 +17,8 @@ def acceder(request):
             usuario = authenticate(username=nombre_usuario, password=password)
             if usuario is not None:
                 login(request, usuario)
-                messages.success(request, F"Bienvenid@ de nuevo {nombre_usuario}")
-                return redirect("layouts/tienda.html")
-                #return redirect("listado_productos")
+                messages.success(request, F"Bienvenid@ de nuevo {nombre_usuario}")                
+                return redirect("listado_productos")
             else:
                 messages.error(request, "Los datos son incorrectos")
         else:
@@ -42,9 +41,8 @@ class VistaRegistro(View):
             usuario = form.save()
             nombre_usuario = form.cleaned_data.get("username")
             messages.success(request, F"Bienvenid@ a la plataforma {nombre_usuario}")
-            login(request, usuario)
-            return redirect("layouts/tienda.html")
-            #return redirect("listado_productos")
+            login(request, usuario)            
+            return redirect("listado_productos")
         else:
             for msg in form.error_messages:
                 messages.error(request, form.error_messages[msg])
