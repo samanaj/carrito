@@ -1,10 +1,9 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock %} - Proyecto Carrito</title>
-
-    {% load static %}
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet"/>
 </head>
 
@@ -27,7 +26,7 @@
             <!-- listar productos -->
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Tienda</a>
+                    <a class="nav-link" href="{% url 'listado_productos' %}">Tienda</a>
                 </li>
             </ul>
 
