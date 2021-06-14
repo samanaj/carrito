@@ -2,33 +2,43 @@
 
 {% load cart_tags %}
 
-{% block title %}Tienda{% endblock %}
+{% block title %} Tienda {% endblock %}
 
 {% block content %}
+    este esl templeta tags Total {{9|multiply:5|money_format:"Q"}} <br>
+    este es el context processor Total: {{cart_total_amount|money_format:"Q"}}
     <div class="row">
+        <!-- usamos solo 9 espacios de los 12 que tiene el screen -->
         <div class="col-9">
             <div class="row">
+                <!-- el products es el que viene de la vista en la parte del diccionario "products":products -->
                 {% for product in products %}
-                    <div class="col-md-3 col-sm-12 col-lg-4">
-                        <div class="card" style="width: 100%">
+                    <!-- aqui dividimos el area a la izquierda en tres secciones y lo mostramos. -->
+                    <div class="col-md-3 col-sm-12 col-lg-4">                        
+                        <!-- utilizamos un div de tipo card que nos provee bootstrap -->
+                        <div class="card" style="width: 100%">                         
                             <img src="{{ product.image.url }}" style="width:100%;" class="card-img-top" alt="{{ product.name }}" />
+                            <!-- en el body del card colocamos los siguiente datos -->
                             <div class="card-body">
                                 <h5 class="card-title"> {{ product.name }}</h5>
-                                <p class="card-text">{{ product.excerpt }}</p>
-                                <p class="card-text">{{ product.price }}€</p>
+                                <p class="card-text">{{ product.excerp }}</p>
+                                <p class="card-text"> Precio Q {{ product.price }}</p>
                             </div>
                             <div class='card-footer text-center'>
-                                <a href="#" class="btn btn-success">
-                                    Añadir al carrito
+                                <a href="{% url 'carro:add_product' product.id %}" class="btn btn-info">
+                                    Agregar al carrito
                                 </a>
                             </div>
                         </div>
+                        
                     </div>
                 {% endfor %}
             </div>
         </div>
-
+        <!-- mostramos un sidebar del lado derecho utilizando los otros 3 de los 12-->
         <div class="col-3">
+            aca estara la gestion del carrito
+            {% include 'cart/widget.html' %}
            <!-- widgets -->
         </div>
     </div>

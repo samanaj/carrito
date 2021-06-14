@@ -1,0 +1,53 @@
+{% load cart_tags %}
+<!-- definimos una tabla de tipo bordered -->
+<table class="table table-bordered">
+    <!-- aca lo que deseamos para el encabezado de la tabla -->
+     <thead>
+        <tr>
+            <th colspan="3" class="text-center">
+                Carrito de compras
+            </th>
+        </tr>
+        <tr>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <!-- aca la logica para operara el body del carrito -->
+    <tbody>
+        {% if request.session.cart.items %}
+           {% for key, value in request.session.cart.items %}
+                <tr class="text-center">
+                    <td>{{ value.name }}</td>
+                    <td>{{ value.quantity }}</td>
+                   
+                    <!-- acciones para incrementar o decrementar -->
+                    
+                </tr>
+           {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="3">
+                    <div class="alert alert-danger text-center">
+                        No tienes productos en el carrito
+                    </div>
+                </td>
+            </tr>
+        {% endif %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3">
+                Total: {{ cart_total_amount|money_format:"Q" }}
+            </td>
+        </tr>
+        {% if request.session.cart.items %}
+            <tr>
+                <td colspan="3">
+                    <a href="#" class="btn btn-success">Crear pedido</a>
+                </td>
+            </tr>
+        {% endif %}
+    </tfoot>
+</table>

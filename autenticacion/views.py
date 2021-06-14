@@ -1,6 +1,3 @@
-from django.shortcuts import render
-
-# Create your views here.
 from django.shortcuts import render, redirect
 from django.views.generic import View
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
@@ -17,8 +14,8 @@ def acceder(request):
             usuario = authenticate(username=nombre_usuario, password=password)
             if usuario is not None:
                 login(request, usuario)
-                messages.success(request, F"Bienvenid@ de nuevo {nombre_usuario}")                
-                return redirect("listado_productos")
+                messages.success(request, F"Bienvenid@ de nuevo {nombre_usuario}")
+                return redirect("products:listado_productos")
             else:
                 messages.error(request, "Los datos son incorrectos")
         else:
@@ -40,9 +37,9 @@ class VistaRegistro(View):
         if form.is_valid():
             usuario = form.save()
             nombre_usuario = form.cleaned_data.get("username")
-            messages.success(request, F"Bienvenid@ a la plataforma {nombre_usuario}")
-            login(request, usuario)            
-            return redirect("listado_productos")
+            messages.success(request, F"Bienvenid@ a E-Commerce {nombre_usuario}")
+            login(request, usuario)
+            return redirect("products:listado_productos")
         else:
             for msg in form.error_messages:
                 messages.error(request, form.error_messages[msg])
@@ -52,4 +49,4 @@ class VistaRegistro(View):
 def salir(request):
     logout(request)
     messages.success(request, F"Tu sesión se ha cerrado correctamente")
-    return redirect("acceder")
+    return redirect("autenticacion:acceder")
